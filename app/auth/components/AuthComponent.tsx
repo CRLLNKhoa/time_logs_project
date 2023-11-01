@@ -12,7 +12,7 @@ export default function AuthComponent() {
 		supabase.auth.signInWithOAuth({
 			provider: "github",
 			options: {
-				redirectTo: `https://time-logs-project.vercel.app/auth/callback`,
+				redirectTo: `${location.origin}/auth/callback`,
 			},
 		});
 	};
@@ -21,7 +21,7 @@ export default function AuthComponent() {
 		supabase.auth.signInWithOAuth({
 			provider: "google",
 			options: {
-				redirectTo: `https://time-logs-project.vercel.app/auth/callback`,
+				redirectTo: `${location.origin}/auth/callback`,
 			},
 		});
 	};

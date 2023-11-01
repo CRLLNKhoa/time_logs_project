@@ -1,20 +1,16 @@
-import { NextApiHandler } from 'next'
-import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server'
 
-const handler: NextApiHandler = async (req, res) => {
-  const { code } = req.query
+export async function GET(req: NextRequest) {
+  const cookieStore = cookies()
+  const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+  const { searchParams } = new URL(req.url)
+  const code = searchParams.get('code')
+
   if (code) {
-    const supabase = createPagesServerClient({ req, res })
-    try {
-      await supabase.auth.exchangeCodeForSession(String(code))
-      res.redirect('/')
-    } catch (e) {
-      console.error('Failed to exchange code for session:', e)
-      res.redirect('/auth')
-    }
-  } else {
-    res.redirect('/auth')
+    await supabase.auth.exchangeCodeForSession(code)
   }
-}
 
-export default handler
+  return NextResponse.redirect(new URL('/', req.url))
+}

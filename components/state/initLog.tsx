@@ -10,7 +10,7 @@ export default function InitLog({logs}: {logs: ILog[]}) {
         [key: string]: ILog
     } = {}
 
-    logs.forEach((log) => {
+    logs?.forEach((log) => {
         result[log.date as string] = {...log, date: new Date(log.date)}
     })
     return result

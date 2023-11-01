@@ -6,6 +6,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {FcGoogle} from "react-icons/fc"
 import {FaGithub} from "react-icons/fa"
 export default function AuthComponent() {
+	console.log(location.origin)
 	const supabase = createClientComponentClient();
 
 	const handleLoginGithub = () => {
